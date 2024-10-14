@@ -1,25 +1,24 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input, PasswordInput } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { signUpSchema, SignUpValues } from "@/lib/validation";
+import { loginSchema, LoginValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signup } from "./actions";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { login } from "./actions";
 
-function SignUpForm() {
-  const form = useForm<SignUpValues>({
-    resolver: zodResolver(signUpSchema),
+function LoginForm() {
+  const form = useForm<LoginValues>({
+    resolver: zodResolver(loginSchema),
   });
 
   const [isPending, startTransition] = useTransition();
@@ -28,7 +27,7 @@ function SignUpForm() {
   const handleSubmit = form.handleSubmit((data) => {
     setError(undefined);
     startTransition(async () => {
-      const { error } = await signup(data);
+      const { error } = await login(data);
       if (error) setError(error);
     });
   });
@@ -51,22 +50,6 @@ function SignUpForm() {
                 <FormControl>
                   <Input placeholder="Write your username" {...field} />
                 </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your email" {...field} />
-                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -85,7 +68,7 @@ function SignUpForm() {
             )}
           />
           <Button isLoading={isPending} type="submit" className="w-full">
-            Create account
+            Log in
           </Button>
         </form>
       </Form>
@@ -93,4 +76,4 @@ function SignUpForm() {
   );
 }
 
-export default SignUpForm;
+export default LoginForm;

@@ -58,7 +58,7 @@ export const signup = async (
       },
     });
 
-    createSession({
+    await createSession({
       type: "default",
       userId,
     });

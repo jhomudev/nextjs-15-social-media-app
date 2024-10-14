@@ -44,7 +44,7 @@ export const logout = async () => {
 
   await lucia.invalidateSession(session.id);
 
-  createSession({ type: "blank" });
+  await createSession({ type: "blank" });
 
   return redirect("/login");
 };

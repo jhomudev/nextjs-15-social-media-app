@@ -1,39 +1,38 @@
-import React from "react";
+import LoginImage from "@/assets/login-image.jpg";
 import { Metadata } from "next";
-import signupImage from "@/assets/signup-image.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import SignUpForm from "./SignUpForm";
+import LoginForm from "./LoginForm";
 
 export const metadata: Metadata = {
-  title: "Sign Up",
+  title: "Login",
 };
 
-function SignUpPage() {
+function LoginPage() {
   return (
     <div className="flex h-dvh items-center justify-center p-5">
       <main className="flex h-full max-h-[40rem] w-full max-w-[64rem] justify-center overflow-hidden rounded-2xl bg-card shadow-2xl">
         <div className="w-full max-w-xl space-y-10 overflow-y-auto p-10 md:w-1/2">
           <div className="space-y-1 text-center">
-            <h1 className="text-3xl font-bold">Sign up to bugbook</h1>
+            <h1 className="text-3xl font-bold">Log in to bugbook</h1>
             <p className="text-muted-foreground">
               A place where even <span className="italic">you</span> can find a
               friend.
             </p>
           </div>
           <div className="space-y-5">
-            <SignUpForm />
+            <LoginForm />
             <Link
-              href={"/login"}
+              href={"/signup"}
               className="block text-center text-sm hover:underline"
             >
-              Already have an account? Log in
+              Don&apos;t you have an account? Sign up
             </Link>
           </div>
         </div>
         <Image
-          src={signupImage}
-          alt="Sign up image"
+          src={LoginImage}
+          alt="Log in image"
           className="hidden w-1/2 object-cover md:block"
         />
       </main>
@@ -41,4 +40,4 @@ function SignUpPage() {
   );
 }
 
-export default SignUpPage;
+export default LoginPage;

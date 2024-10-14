@@ -1,6 +1,8 @@
+"use client";
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { EyeIcon, EyeOff } from "lucide-react";
+import { EyeIcon, EyeOff, EyeOffIcon, SearchIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -55,4 +57,37 @@ const PasswordInput = React.forwardRef<HTMLInputElement, InputProps>(
 );
 PasswordInput.displayName = "PasswordInput";
 
-export { Input, PasswordInput };
+const SearchField = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, ...props }, ref) => {
+    const router = useRouter();
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const q = (form.q as HTMLInputElement).value.trim();
+      if (!q) return;
+      router.push(`/search?q=${encodeURIComponent(q)}`);
+    };
+
+    return (
+      <form
+        className="relative"
+        onSubmit={handleSubmit}
+        method="GET"
+        action={"/search"}
+      >
+        <Input
+          {...props}
+          type="search"
+          ref={ref}
+          name="q"
+          placeholder="Search..."
+        />
+        <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:text-foreground" />
+      </form>
+    );
+  },
+);
+SearchField.displayName = "SearchField";
+
+export { Input, PasswordInput, SearchField };
